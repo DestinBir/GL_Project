@@ -19,6 +19,29 @@ def insert_or_update_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissan
         return False
     return True
 
+def inserer_promotion(desi_promo, connection):
+        
+        # Requête SQL pour insérer ou mettre à jour la promotion
+        query = """
+        INSERT INTO Promotion (DesiPromo)
+        VALUES (%s)
+        ON DUPLICATE KEY UPDATE
+            DesiPromo = VALUES(DesiPromo);
+        """
+        
+        params = (desi_promo,)
+        
+        cursor = connection.cursor()
+        cursor.execute(query, params)
+        
+        
+        connection.commit()
+        print("Promotion ajoutée ou mise à jour avec succès.")
+
+
+# Exemple d'utilisation
+# inserer_promotion('Promotion 2024')
+
 
 def insert_or_update_inscription(cursor, matricule, id_promo, année_académique, semestre):
     # Insérer ou mettre à jour une inscription dans la table Inscrire

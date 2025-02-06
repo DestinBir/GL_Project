@@ -1,5 +1,5 @@
 # connection à la bd mysql
-
+from .try import insert_or_update_etudiant, inserer_promotion, insert_or_update_inscription
 import mysql.connector
 
 with mysql.connector.connect(
@@ -7,7 +7,5 @@ with mysql.connector.connect(
     user="root",
     password="",
     database="GestNotes"
-) as conn:
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM etudiant")
-    print('It works')
+) as connexion:
+    
