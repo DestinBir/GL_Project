@@ -149,11 +149,32 @@ def inscrire_ajouter_etudiant(conn, matricule, nom, prenom, sexe, lieu_naissance
     cursor.close()
     conn.close()
 
-def get_etudiant_by_promotion_per_semester(cursor, promotion, semestre):
-    sql = "SELECT * FROM Etudiant WHERE promotion = %s AND Semestre = %s"
+def get_etudiant(conn, matricule):
+    cursor = conn.cursor()
     
-    cursor.execute(sql, (promotion, semestre))
+    try:
+        sql = "SELECT * FROM Etudiant WHERE matricule = %s "
+        cursor.execute(sql, (matricule,))
+        return cursor.fetchall()
+    except Error as e:
+        print(f"Erreur lors de la recupération des etudiants de la promotion : {e}")
+        
 
-    etudiants = cursor.fetchall()
+def get_etudiant_by_promotion_per_semester(conn, promotion, semestre):
     
-    print(etudiants)
+    cursor = conn.cursor()
+    etudiants = []
+    
+    try:
+        sql = "SELECT * FROM Inscrire WHERE id_promo = %s AND Semestre = %s"
+        cursor.execute(sql, (promotion, semestre))
+        inscriptions = cursor.fetchall()
+        
+        for inscription in inscriptions:
+            etudiants.append(get_etudiant(conn, inscription[1]))
+        
+        return etudiants
+    except Error as e:
+        print(f"Erreur lors de la recupération des etudiants de la promotion : {e}")
+        
+        return etudiants
