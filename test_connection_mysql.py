@@ -9,4 +9,4 @@ with mysql.connector.connect(
     password="",
     database="GestNotes"
 ) as connection:
-    inscrire(connection, '147895623', 'Biringanine', 'Destin', 'M', 'Bukavu', '1995-06-15', 1, '2024-2025', 'Semestre 1')
+    inscrire(connection, '147895678', 'Biringanine', 'Delphin', 'M', 'Bukavu', '1995-06-15', 1, '2024-2025', 'Semestre 1')
