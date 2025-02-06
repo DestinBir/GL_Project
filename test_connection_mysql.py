@@ -1,4 +1,5 @@
 # connection à la bd mysql
+from functions import *
 
 import mysql.connector
 
@@ -7,7 +8,12 @@ with mysql.connector.connect(
     user="root",
     password="",
     database="GestNotes"
-) as conn:
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM etudiant")
-    print('It works')
+) as connection:
+    print('=======================================')
+    print('Connexion réussie à la base de données.')
+    print('=======================================')
+    print('')
+    print('=======================================')
+    inscrire_ajouter_etudiant(connection, '165895678', 'Baraka', 'Elie', 'M', 'Bukavu', '1995-06-15', 1, '2024-2025', 'Semestre 1')
+    # verifier_etudiant_inscrit(connection, '147895678', 'Semestre 1')
+    print('=======================================')
