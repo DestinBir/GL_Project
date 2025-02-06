@@ -179,3 +179,22 @@ def get_etudiant_by_promotion_per_semester(conn, promotion, semestre):
         
         return etudiants
     
+def get_etudiant_by_promotion(conn, promotion):
+    
+    cursor = conn.cursor()
+    etudiants = []
+    
+    try:
+        sql = "SELECT * FROM Inscrire WHERE id_promo = %s"
+        cursor.execute(sql, (promotion,))
+        inscriptions = cursor.fetchall()
+        
+        for inscription in inscriptions:
+            etudiants.append(get_etudiant(conn, inscription[1]))
+        
+        return etudiants
+    except Error as e:
+        print(f"Erreur lors de la recupération des etudiants de la promotion : {e}")
+        
+        return etudiants
+    
