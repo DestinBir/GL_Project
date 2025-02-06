@@ -5,7 +5,7 @@ import mysql.connector
 with mysql.connector.connect(
     host="localhost",  
     user="root",
-    password="root",
+    password="",
     database="GestNotes"
 ) as conn:
     cursor = conn.cursor()
