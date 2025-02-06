@@ -9,10 +9,10 @@ def verifier_etudiant_exist(cursor, matricule):
     etudiants = cursor.fetchall()
     
     if etudiants:
-        print("Cet etudiant existe déjà !")
+        
         return True
     else:
-        print("Cet etudiant n'existe pas !")
+        
         return False
 
 def verifier_etudiant_inscrit(cursor, matricule, semestre):
@@ -23,10 +23,10 @@ def verifier_etudiant_inscrit(cursor, matricule, semestre):
     etudiants = cursor.fetchall()
     
     if etudiants:
-        print("Cet étudiant est inscrit !")
+        
         return True
     else:
-        print("Cet étudiant n'est pas inscrit !")
+        
         return False
 
 def insert_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance):
@@ -53,6 +53,7 @@ def insert_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_n
         print(f"Erreur lors de l'ajout de l'étudiant car il existe déjà")
         return False 
 
+
 def update_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance):
     
     try:
@@ -70,6 +71,7 @@ def update_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_n
         print(f"Erreur lors de l'insertion ou de la mise à jour de l'étudiant : {e}")
         return False
     return True
+
 
 def insert_promotion(desi_promo, conn):
         
@@ -89,10 +91,6 @@ def insert_promotion(desi_promo, conn):
         
         conn.commit()
         print("Promotion ajoutée ou mise à jour avec succès.")
-
-
-# Exemple d'utilisation
-# inserer_promotion('Promotion 2024')
 
 
 def insert_inscription(cursor, matricule, id_promo, année_académique, semestre):
@@ -139,7 +137,7 @@ def inscrire_ajouter_etudiant(conn, matricule, nom, prenom, sexe, lieu_naissance
         print("Étudiant ajouté avec succès.")
     
         if insert_inscription(cursor, matricule, id_promo, année_académique, semestre):
-            print("Inscription ajoutée succès.")
+            print("Inscription ajoutée avec succès.")
         
         print('Good 😂😂🎉')
     else:
@@ -150,3 +148,12 @@ def inscrire_ajouter_etudiant(conn, matricule, nom, prenom, sexe, lieu_naissance
     conn.commit()
     cursor.close()
     conn.close()
+
+def get_etudiant_by_promotion_per_semester(cursor, promotion, semestre):
+    sql = "SELECT * FROM Etudiant WHERE promotion = %s AND Semestre = %s"
+    
+    cursor.execute(sql, (promotion, semestre))
+
+    etudiants = cursor.fetchall()
+    
+    print(etudiants)
