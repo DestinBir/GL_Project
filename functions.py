@@ -76,30 +76,12 @@ def connect_to_db():
         return None
 
 
-def main():
-    # Connexion à la base de données
-    conn = connect_to_db()
-    if not conn:
-        return
-
+def inscrire(conn, matricule, nom, prenom, sexe, lieu_naissance, date_naissance, id_promo, année_académique, semestre):
     cursor = conn.cursor()
 
-    
-    matricule = '1234567890'
-    nom = 'Destin'
-    prenom = 'Baseme'
-    sexe = 'M'
-    lieu_naissance = 'Paris'
-    date_naissance = '2000-5-6'
-    
     if insert_or_update_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance):
         print("Étudiant inséré ou mis à jour avec succès.")
     
-    
-    id_promo = 1  
-    année_académique = '2025-2026'
-    semestre = 'Semestre 1'
-
     if insert_or_update_inscription(cursor, matricule, id_promo, année_académique, semestre):
         print("Inscription ajoutée ou mise à jour avec succès.")
 
@@ -107,8 +89,3 @@ def main():
     conn.commit()
     cursor.close()
     conn.close()
-
-"""
-if __name__ == '__try__':
-    main()
-"""

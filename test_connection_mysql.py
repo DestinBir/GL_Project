@@ -1,5 +1,6 @@
 # connection à la bd mysql
-from .functions import insert_or_update_etudiant, insert_promotion, insert_or_update_inscription
+from functions import *
+
 import mysql.connector
 
 with mysql.connector.connect(
@@ -7,5 +8,5 @@ with mysql.connector.connect(
     user="root",
     password="",
     database="GestNotes"
-) as connexion:
-    insert_promotion('Bac3 Informatique', c)
+) as connection:
+    inscrire(connection, '147895623', 'Biringanine', 'Destin', 'M', 'Bukavu', '1995-06-15', 1, '2024-2025', 'Semestre 1')
