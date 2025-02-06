@@ -9,4 +9,6 @@ with mysql.connector.connect(
     password="",
     database="GestNotes"
 ) as connection:
-    inscrire(connection, '147895678', 'Biringanine', 'Delphin', 'M', 'Bukavu', '1995-06-15', 1, '2024-2025', 'Semestre 1')
+    print('Connexion réussie à la base de données.')
+    # inscrire(connection, '147895678', 'Biringanine', 'Delphin', 'G', 'Bukavu', '1995-06-15', 1, '2024-2025', 'Semestre 1')
+    verifier_etudiant_exist(connection, '147895674')

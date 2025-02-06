@@ -43,7 +43,7 @@ def insert_promotion(desi_promo, conn):
 # inserer_promotion('Promotion 2024')
 
 
-def insert_or_update_inscription(cursor, matricule, id_promo, année_académique, semestre):
+def insert_inscription(cursor, matricule, id_promo, année_académique, semestre):
     # Insérer ou mettre à jour une inscription dans la table Inscrire
     try:
         cursor.execute("""
@@ -75,6 +75,38 @@ def connect_to_db():
         print(f"Erreur de connexion à la base de données : {e}")
         return None
 
+def verifier_etudiant_exist(conn, matricule):
+    cursor = conn.cursor()
+    
+    sql = "SELECT * FROM Etudiant WHERE matricule = %s"
+    
+    cursor.execute(sql, (matricule,))
+
+    etudiants = cursor.fetchall()
+    
+    if etudiants:
+        print("Cet etudiant existe déjà !")
+        return True
+    else:
+        print("Cet etudiant n'existe pas !")
+        return False
+
+def verifier_etudiant_inscrit(conn, matricule, semestre):
+    cursor = conn.cursor()
+    
+    sql = "SELECT * FROM Inscrire WHERE matricule = %s AND Semestre = %s"
+    
+    cursor.execute(sql, (matricule, semestre))
+
+    etudiants = cursor.fetchall()
+    
+    if etudiants:
+        print("Cet étudiant est inscrit !")
+        return True
+    else:
+        print("Cet étudiant n'est pas inscrit !")
+        return False
+
 
 def inscrire(conn, matricule, nom, prenom, sexe, lieu_naissance, date_naissance, id_promo, année_académique, semestre):
     cursor = conn.cursor()
@@ -84,8 +116,11 @@ def inscrire(conn, matricule, nom, prenom, sexe, lieu_naissance, date_naissance,
     
     if insert_or_update_inscription(cursor, matricule, id_promo, année_académique, semestre):
         print("Inscription ajoutée ou mise à jour avec succès.")
-
+        
+    print('Tout a été fait !')
     
+
+
     conn.commit()
     cursor.close()
     conn.close()
