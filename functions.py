@@ -31,21 +31,27 @@ def verifier_etudiant_inscrit(cursor, matricule, semestre):
 
 def insert_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance):
     
-    try:
-        cursor.execute("""
-            INSERT INTO Etudiant (matricule, NomsEtu, PrénomEtu, Sexe, LieuNais, DateNais)
-            VALUES (%s, %s, %s, %s, %s, %s)
-            ON DUPLICATE KEY UPDATE
-                NomsEtu = VALUES(NomsEtu),
-                PrénomEtu = VALUES(PrénomEtu),
-                Sexe = VALUES(Sexe),
-                LieuNais = VALUES(LieuNais),
-                DateNais = VALUES(DateNais)
-        """, (matricule, nom, prenom, sexe, lieu_naissance, date_naissance))
-    except Error as e:
-        print(f"Erreur lors de l'insertion ou de la mise à jour de l'étudiant : {e}")
-        return False
-    return True
+    test = verifier_etudiant_exist(cursor, matricule)
+    
+    if not test:
+        try:
+            cursor.execute("""
+                INSERT INTO Etudiant (matricule, NomsEtu, PrénomEtu, Sexe, LieuNais, DateNais)
+                VALUES (%s, %s, %s, %s, %s, %s)
+                ON DUPLICATE KEY UPDATE
+                    NomsEtu = VALUES(NomsEtu),
+                    PrénomEtu = VALUES(PrénomEtu),
+                    Sexe = VALUES(Sexe),
+                    LieuNais = VALUES(LieuNais),
+                    DateNais = VALUES(DateNais)
+            """, (matricule, nom, prenom, sexe, lieu_naissance, date_naissance))
+        except Error as e:
+            print(f"Erreur lors de l'insertion ou de la mise à jour de l'étudiant : {e}")
+            return False
+        return True
+    else:
+        print(f"Erreur lors de l'ajout de l'étudiant car il existe déjà")
+        return False 
 
 def update_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance):
     
@@ -126,16 +132,18 @@ def connect_to_db():
         print(f"Erreur de connexion à la base de données : {e}")
         return None
 
-def inscrire(conn, matricule, nom, prenom, sexe, lieu_naissance, date_naissance, id_promo, année_académique, semestre):
+def inscrire_ajouter_etudiant(conn, matricule, nom, prenom, sexe, lieu_naissance, date_naissance, id_promo, année_académique, semestre):
     cursor = conn.cursor()
 
-    if insert_or_update_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance):
-        print("Étudiant inséré ou mis à jour avec succès.")
+    if insert_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance):
+        print("Étudiant ajouté avec succès.")
     
-    if insert_inscription(cursor, matricule, id_promo, année_académique, semestre):
-        print("Inscription ajoutée ou mise à jour avec succès.")
+        if insert_inscription(cursor, matricule, id_promo, année_académique, semestre):
+            print("Inscription ajoutée succès.")
         
-    print('😂😂🎉')
+        print('Good 😂😂🎉')
+    else:
+        print('Bad 😂😂🎉')
     
 
 
