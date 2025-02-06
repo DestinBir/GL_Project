@@ -179,6 +179,7 @@ def get_etudiant_by_promotion_per_semester(conn, promotion, semestre):
         
         return etudiants
     
+    
 def get_etudiant_by_promotion(conn, promotion):
     
     cursor = conn.cursor()
