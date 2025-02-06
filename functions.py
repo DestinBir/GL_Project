@@ -178,3 +178,4 @@ def get_etudiant_by_promotion_per_semester(conn, promotion, semestre):
         print(f"Erreur lors de la recupération des etudiants de la promotion : {e}")
         
         return etudiants
+    
