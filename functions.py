@@ -64,8 +64,8 @@ def connect_to_db():
     try:
         conn = mysql.connector.connect(
             host='localhost',
-            user='root',  # Remplacez par votre utilisateur
-            password='',  # Remplacez par votre mot de passe
+            user='root',  
+            password='',  
             database='GestNotes'
         )
         if conn.is_connected():
@@ -84,26 +84,26 @@ def main():
 
     cursor = conn.cursor()
 
-    # Exemple d'ajout ou de mise à jour d'un étudiant
+    
     matricule = '1234567890'
-    nom = 'Doe'
-    prenom = 'John'
+    nom = 'Destin'
+    prenom = 'Baseme'
     sexe = 'M'
     lieu_naissance = 'Paris'
-    date_naissance = '1995-06-15'
+    date_naissance = '2000-5-6'
     
     if insert_or_update_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance):
         print("Étudiant inséré ou mis à jour avec succès.")
     
-    # Exemple d'ajout ou de mise à jour d'une inscription
-    id_promo = 1  # Supposons que l'ID de la promotion soit 1
+    
+    id_promo = 1  
     année_académique = '2025-2026'
     semestre = 'Semestre 1'
 
     if insert_or_update_inscription(cursor, matricule, id_promo, année_académique, semestre):
         print("Inscription ajoutée ou mise à jour avec succès.")
 
-    # Commit des changements et fermeture de la connexion
+    
     conn.commit()
     cursor.close()
     conn.close()
