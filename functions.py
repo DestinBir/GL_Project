@@ -19,7 +19,7 @@ def insert_or_update_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissan
         return False
     return True
 
-def inserer_promotion(desi_promo, connection):
+def insert_promotion(desi_promo, connection):
         
         # Requête SQL pour insérer ou mettre à jour la promotion
         query = """
