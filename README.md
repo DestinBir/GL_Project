@@ -22,13 +22,13 @@ cd <NOM_DU_PROJET>
 #### Windows :
 ```bash
 python -m venv env
-venv\Scripts\activate
+env\Scripts\activate
 ```
 
 #### macOS & Linux :
 ```bash
 python -m venv env
-source venv/bin/activate
+source env/bin/activate
 ```
 
 ### 3️⃣ Installer les dépendances
