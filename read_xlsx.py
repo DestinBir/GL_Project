@@ -47,4 +47,10 @@ def filter_fonction(data):
 			data.remove(i)
 	return data
 
-def 
+def get_data_from_excel(file_path, sheet_name=None):
+	"""
+	Obtenir les données du fichier excel
+	"""
+	data = excel_to_list_of_dictionaries(file_path, sheet_name)
+	data = filter_fonction(data)
+	return data
