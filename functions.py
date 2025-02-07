@@ -148,6 +148,8 @@ def inscrire_ajouter_etudiant(conn, matricule, nom, prenom, sexe, lieu_naissance
     else:
         print('Bad 😂😂🎉')
     
+    cursor.close()
+    conn.commit() 
     
 
 
@@ -206,12 +208,14 @@ def inscrire_from_excel(path, conn, promotion, annee_academique, semestre):
     
     data = get_data_from_excel(path)
     
+    # print(data)
+    
     for item in data:
         inscrire_ajouter_etudiant(conn, item["matricule"], item["nom"], item["prenom"], item["sexe"], item["lieunais"], item["datenais"], promotion, annee_academique, semestre)
+        
     
     print('=======================================')
     print('Inscription réussie à la base de données.')
     print('=======================================')
     
-    conn.commit()
     conn.close()
