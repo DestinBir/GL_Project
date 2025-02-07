@@ -76,7 +76,7 @@ def filter_fonction_1(data):
     """
     Supprime les entrées où la matricule, le nom ou le prénom est absent (None ou vide).
     """
-    return [i for i in data if i.get("matricule") and i.get("nom") and i.get("prenom")]
+    return [i for i in data if i[0] and i[1] and i[2]]
 
 
 def get_data_from_excel(file_path, sheet_name=None):
