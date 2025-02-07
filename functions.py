@@ -1,5 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
+from read_xlsx import *
+
 
 def verifier_etudiant_exist(cursor, matricule):
     sql = "SELECT * FROM Etudiant WHERE matricule = %s"
@@ -15,6 +17,7 @@ def verifier_etudiant_exist(cursor, matricule):
         
         return False
 
+
 def verifier_etudiant_inscrit(cursor, matricule, semestre):
     sql = "SELECT * FROM Inscrire WHERE matricule = %s AND Semestre = %s"
     
@@ -28,6 +31,7 @@ def verifier_etudiant_inscrit(cursor, matricule, semestre):
     else:
         
         return False
+
 
 def insert_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance):
     
@@ -130,6 +134,7 @@ def connect_to_db():
         print(f"Erreur de connexion à la base de données : {e}")
         return None
 
+
 def inscrire_ajouter_etudiant(conn, matricule, nom, prenom, sexe, lieu_naissance, date_naissance, id_promo, année_académique, semestre):
     cursor = conn.cursor()
 
@@ -148,6 +153,7 @@ def inscrire_ajouter_etudiant(conn, matricule, nom, prenom, sexe, lieu_naissance
     conn.commit()
     cursor.close()
     conn.close()
+
 
 def get_etudiant(conn, matricule):
     cursor = conn.cursor()
@@ -199,3 +205,11 @@ def get_etudiant_by_promotion(conn, promotion):
         
         return etudiants
     
+
+def inscrire_from_excel(path, conn):
+    
+    data = get_data_from_excel(path)
+    
+    for item in data:
+        print(item['matricule'])
+        
