@@ -38,6 +38,31 @@ def excel_to_list_of_dictionaries(file_path, sheet_name=None):
 
     return data
 
+def excel_to_list_of_tuples(file_path, sheet_name=None):
+    """
+    Transforme une feuille Excel en une liste de tuples.
+    """
+    wb = load_workbook(file_path)
+
+    sheet_active = None
+    if sheet_name:
+        if sheet_name.lower() in [sheet.lower() for sheet in wb.sheetnames]:
+            sheet_active = wb[sheet_name]
+    else:
+        sheet_active = wb.active  # Utilise la feuille active si aucun nom n'est spécifié
+
+    if not sheet_active:
+        raise ValueError("Sheet not found")
+
+    data = []
+
+    for row_index, row in enumerate(sheet_active.iter_rows(values_only=True), start=1):
+        if row_index == 1:
+            continue  # Ignorer la première ligne (en-têtes)
+        data.append(tuple(row))  # Convertir la ligne en tuple et l'ajouter à la liste
+
+    return data
+
 def filter_fonction(data):
 	"""
 	supprimer les données dont la matricule, le nom ou le prénom serait absente
@@ -46,6 +71,13 @@ def filter_fonction(data):
 		if i["matricule"]==None or i["nom"]==None or i["prenom"]==None:
 			data.remove(i)
 	return data
+
+def filter_fonction(data):
+    """
+    Supprime les entrées où la matricule, le nom ou le prénom est absent (None ou vide).
+    """
+    return [i for i in data if i.get("matricule") and i.get("nom") and i.get("prenom")]
+
 
 def get_data_from_excel(file_path, sheet_name=None):
 	"""
