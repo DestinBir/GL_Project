@@ -18,5 +18,6 @@ with mysql.connector.connect(
     # verifier_etudiant_inscrit(connection, '147895678', 'Semestre 1')
     # print(get_etudiant_by_promotion_per_semester(connection, 1, 'Semestre 1'))
     # print(get_etudiant(connection, '147895623'))
-    inscrire_from_excel("format.xlsx", connection)
+    # inscrire_from_excel version 2
+    inscrire_from_excel("format.xlsx", connection, 1, "2024-2025", "Semestre 1")
     print('=======================================')

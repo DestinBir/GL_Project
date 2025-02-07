@@ -54,3 +54,5 @@ def get_data_from_excel(file_path, sheet_name=None):
 	data = excel_to_list_of_dictionaries(file_path, sheet_name)
 	data = filter_fonction(data)
 	return data
+
+# print(get_data_from_excel("format.xlsx"))
