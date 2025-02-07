@@ -72,7 +72,7 @@ def filter_fonction(data):
 			data.remove(i)
 	return data
 
-def filter_fonction(data):
+def filter_fonction_1(data):
     """
     Supprime les entrées où la matricule, le nom ou le prénom est absent (None ou vide).
     """
@@ -80,11 +80,10 @@ def filter_fonction(data):
 
 
 def get_data_from_excel(file_path, sheet_name=None):
-	"""
-	Obtenir les données du fichier excel
-	"""
-	data = excel_to_list_of_dictionaries(file_path, sheet_name)
-	data = filter_fonction(data)
-	return data
+    
+    data = excel_to_list_of_tuples(file_path, sheet_name)
+    data = filter_fonction_1(data)
+    
+    return data
 
-# print(get_data_from_excel("format.xlsx"))
+print(get_data_from_excel("format.xlsx"))
