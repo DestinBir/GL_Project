@@ -239,12 +239,52 @@ def inscrire_etudiant_depuis_excel(path, conn, id_promo, annee_academique, semes
         lieu_naissance = item["lieunais"]
         date_naissance = item["datenais"]
         
-        print(matricule)
-
-        insert_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance)
+        # Vérifier si l'étudiant existe déjà
+        cursor.execute("SELECT COUNT(*) FROM Etudiant WHERE matricule = %s", (matricule,))
+        etudiant_existe = cursor.fetchone()[0] > 0
         
+        if not etudiant_existe:
+            try:
+                cursor.execute("""
+                    INSERT INTO Etudiant (matricule, NomsEtu, PrenomEtu, Sexe, LieuNais, DateNais)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    ON DUPLICATE KEY UPDATE
+                        NomsEtu = VALUES(NomsEtu),
+                        PrenomEtu = VALUES(PrenomEtu),
+                        Sexe = VALUES(Sexe),
+                        LieuNais = VALUES(LieuNais),
+                        DateNais = VALUES(DateNais)
+                """, (matricule, nom, prenom, sexe, lieu_naissance, date_naissance))
+                print(f"Étudiant {matricule} ajouté avec succès.")
+            except Error as e:
+                print(f"Erreur lors de l'insertion de l'étudiant {matricule} : {e}")
+                continue
+        else:
+            print(f"L'étudiant {matricule} existe déjà.")
+        
+        # Vérifier si l'étudiant est déjà inscrit à ce semestre
+        cursor.execute("""
+            SELECT COUNT(*) FROM Inscrire WHERE matricule = %s AND Semestre = %s
+        """, (matricule, semestre))
+        inscription_existe = cursor.fetchone()[0] > 0
+        
+        if not inscription_existe:
+            try:
+                cursor.execute("""
+                    INSERT INTO Inscrire (matricule, id_promo, AnnéeAcadémique, Semestre)
+                    VALUES (%s, %s, %s, %s)
+                    ON DUPLICATE KEY UPDATE
+                        AnnéeAcadémique = VALUES(AnnéeAcadémique),
+                        Semestre = VALUES(Semestre)
+                """, (matricule, id_promo, annee_academique, semestre))
+                print(f"Inscription de l'étudiant {matricule} ajoutée avec succès.")
+            except Error as e:
+                print(f"Erreur lors de l'inscription de l'étudiant {matricule} : {e}")
+        else:
+            print(f"L'étudiant {matricule} est déjà inscrit à ce semestre.")
+    
         conn.commit()
-        cursor.close()
+    cursor.close()
     print('=======================================')
     print('Inscription réussie à la base de données.')
     print('=======================================')
