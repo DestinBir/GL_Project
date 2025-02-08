@@ -1,5 +1,6 @@
 # connection à la bd mysql
 from functions import *
+from read_xlsx import *
 
 import mysql.connector
 
@@ -20,5 +21,5 @@ with mysql.connector.connect(
     # print(get_etudiant(connection, '147895623'))
     # inscrire_from_excel version 2
     # inscrire_etudiant_depuis_excel("format.xlsx", connection, 1, "2024-2025", "Semestre 1")
-    in
+    insert_etudiant_list_of_tuples(connection.cursor(), get_data_from_excel("format.xlsx"))
     print('=======================================')
