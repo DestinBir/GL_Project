@@ -58,6 +58,25 @@ def insert_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_n
         return False 
 
 def insert_etudiant_list_of_tuples(cursor, etudiants):
+    """
+    Insère une liste de tuples d'étudiants dans la base de données.
+    """
+    try:
+        cursor.executemany("""
+            INSERT INTO Etudiant (matricule, NomsEtu, PrénomEtu, Sexe, LieuNais, DateNais)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE
+                NomsEtu = VALUES(NomsEtu),
+                PrénomEtu = VALUES(PrénomEtu),
+                Sexe = VALUES(Sexe),
+                LieuNais = VALUES(LieuNais),
+                DateNais = VALUES(DateNais)
+        """, etudiants)
+        print('Everything okay !')
+    except Error as e:
+        print(f"Erreur lors de l'insertion ou de la mise à jour des étudiants : {e}")
+        return False
+    return True
 
 def update_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance):
     
