@@ -124,10 +124,10 @@ def insert_inscription(cursor, matricule, id_promo, année_académique, semestre
     if not test:
         try:
             cursor.execute("""
-                INSERT INTO Inscrire (matricule, id_promo, AnnéeAcadémique, Semestre)
+                INSERT INTO Inscrire (matricule, id_promo, AnneeAcademique, Semestre)
                 VALUES (%s, %s, %s, %s)
                 ON DUPLICATE KEY UPDATE
-                    AnnéeAcadémique = VALUES(AnnéeAcadémique),
+                    AnneeAcademique = VALUES(AnneeAcademique),
                     Semestre = VALUES(Semestre)
             """, (matricule, id_promo, année_académique, semestre))
         except Error as e:
@@ -271,10 +271,10 @@ def inscrire_etudiant_depuis_excel(path, conn, id_promo, annee_academique, semes
         if not inscription_existe:
             try:
                 cursor.execute("""
-                    INSERT INTO Inscrire (matricule, id_promo, AnnéeAcadémique, Semestre)
+                    INSERT INTO Inscrire (matricule, id_promo, AnneeAcademique, Semestre)
                     VALUES (%s, %s, %s, %s)
                     ON DUPLICATE KEY UPDATE
-                        AnnéeAcadémique = VALUES(AnnéeAcadémique),
+                        AnneeAcademique = VALUES(AnneeAcademique),
                         Semestre = VALUES(Semestre)
                 """, (matricule, id_promo, annee_academique, semestre))
                 print(f"Inscription de l'étudiant {matricule} ajoutée avec succès.")
