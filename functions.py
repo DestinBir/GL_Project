@@ -57,6 +57,7 @@ def insert_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_n
         print(f"Erreur lors de l'ajout de l'étudiant car il existe déjà")
         return False 
 
+def insert_etudiant_list_of_tuples(cursor, etudiants):
 
 def update_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_naissance):
     
@@ -151,8 +152,7 @@ def inscrire_ajouter_etudiant(conn, matricule, nom, prenom, sexe, lieu_naissance
     cursor.close()
     conn.commit() 
     
-
-
+    
 def get_etudiant(conn, matricule):
     cursor = conn.cursor()
     
