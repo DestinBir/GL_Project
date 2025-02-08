@@ -81,8 +81,8 @@ def filter_fonction_1(data):
 
 def get_data_from_excel(file_path, sheet_name=None):
     
-    data = excel_to_list_of_tuples(file_path, sheet_name)
-    data = filter_fonction_1(data)
+    data = excel_to_list_of_dictionaries(file_path, sheet_name)
+    data = filter_fonction(data)
     
     return data
 

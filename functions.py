@@ -40,11 +40,11 @@ def insert_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_n
     if not test:
         try:
             cursor.execute("""
-                INSERT INTO Etudiant (matricule, NomsEtu, PrénomEtu, Sexe, LieuNais, DateNais)
+                INSERT INTO Etudiant (matricule, NomsEtu, PrenomEtu, Sexe, LieuNais, DateNais)
                 VALUES (%s, %s, %s, %s, %s, %s)
                 ON DUPLICATE KEY UPDATE
                     NomsEtu = VALUES(NomsEtu),
-                    PrénomEtu = VALUES(PrénomEtu),
+                    PrenomEtu = VALUES(PrenomEtu),
                     Sexe = VALUES(Sexe),
                     LieuNais = VALUES(LieuNais),
                     DateNais = VALUES(DateNais)
@@ -61,13 +61,14 @@ def insert_etudiant_list_of_tuples(cursor, etudiants):
     """
     Insère une liste de tuples d'étudiants dans la base de données.
     """
+    print(etudiants)
     try:
         cursor.executemany("""
-            INSERT INTO Etudiant (matricule, NomsEtu, PrénomEtu, Sexe, LieuNais, DateNais)
+            INSERT INTO Etudiant (matricule, NomsEtu, PrenomEtu, Sexe, LieuNais, DateNais)
             VALUES (%s, %s, %s, %s, %s, %s)
             ON DUPLICATE KEY UPDATE
                 NomsEtu = VALUES(NomsEtu),
-                PrénomEtu = VALUES(PrénomEtu),
+                PrenomEtu = VALUES(PrenomEtu),
                 Sexe = VALUES(Sexe),
                 LieuNais = VALUES(LieuNais),
                 DateNais = VALUES(DateNais)
@@ -82,11 +83,11 @@ def update_etudiant(cursor, matricule, nom, prenom, sexe, lieu_naissance, date_n
     
     try:
         cursor.execute("""
-            INSERT INTO Etudiant (matricule, NomsEtu, PrénomEtu, Sexe, LieuNais, DateNais)
+            INSERT INTO Etudiant (matricule, NomsEtu, PrenomEtu, Sexe, LieuNais, DateNais)
             VALUES (%s, %s, %s, %s, %s, %s)
             ON DUPLICATE KEY UPDATE
                 NomsEtu = VALUES(NomsEtu),
-                PrénomEtu = VALUES(PrénomEtu),
+                PrenomEtu = VALUES(PrenomEtu),
                 Sexe = VALUES(Sexe),
                 LieuNais = VALUES(LieuNais),
                 DateNais = VALUES(DateNais)
