@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk, filedialog
 import tkinter.font as tkFont
 
+import datetime
+
 class ListeEtudiant(tk.Frame):
     def __init__(self, master, text_promotion="BAC1", **kwargs):
         super().__init__(master, **kwargs)
@@ -47,28 +49,25 @@ class ListeEtudiant(tk.Frame):
         liste = tk.Frame(self, width=self.winfo_screenwidth() - 301, height=self.winfo_screenheight(), bg="white")
         liste.place(x=301, y=0)
         
-        promotion = tk.Label(liste, text=self.TEXT_PROMOTION, bg="white", fg="#0A1F44", font=font_semestre)
-        promotion.place(relx=0.05, rely=0.05)
+        columns = ("Matricule", "Nom", "Postnom", "Sexe", "Lieu de naissance", "Date de naissance")
+        tree = ttk.Treeview(liste, columns=columns, show="headings")
         
-        listeDesEtudiants = tk.Label(liste, text="LISTE DES ETUDIANTS", bg="white", fg="black", font=font_semestre)
-        listeDesEtudiants.place(relx=0.25, rely=0.05)
+        for col in columns:
+            tree.heading(col, text=col)
+            tree.column(col, width=150)
         
-        label_recherche = tk.Label(liste, text="Recherche", bg="white", font=tkFont.Font(family="Arial", size=13))
-        label_recherche.place(relx=0.61, rely=0.055)
-        recherche = tk.Entry(liste, font=tkFont.Font(family="Arial", size=12))
-        recherche.place(relx=0.7, rely=0.05, width=200)
+        data = [
+            ('UK-Ljfdkle01', 'Bahati', 'Jeoge', 'M', 'Bukavu', datetime.date(2012, 12, 12)),
+            ('UK-Ljfdkle02', 'Bahati', 'Jeoge', 'M', 'Bukavu', datetime.date(2012, 12, 13)),
+            ('UK-Ljfdkle03', 'Bahati', 'Jeoge', 'M', 'Bukavu', datetime.date(2012, 12, 14)),
+            ('UK-Ljfdkle04', 'Bahati', 'Jeoge', 'M', 'Bukavu', datetime.date(2012, 12, 15)),
+            ('UK-Ljfdkle05', 'Bahati', 'Jeoge', 'M', 'Bukavu', datetime.date(2012, 12, 16))
+        ]
         
-        frame_header_tableau = tk.Frame(liste, bg="white")
-        frame_header_tableau.place(relx=0, rely=0.1, relwidth=1)
+        for row in data:
+            tree.insert("", "end", values=row)
         
-        font_header_tableau = tkFont.Font(family="Arial", size=14, weight="bold")
-        headers = ["Matricule", "Nom-Postnom", "Sexe", "Date de naissance", "Lieu de naissance"]
-        col_widths = [0.15, 0.35, 0.1, 0.2, 0.2]
-        
-        for i, header in enumerate(headers):
-            label = tk.Label(frame_header_tableau, text=header, bg="white", fg="#0A1F44", font=font_header_tableau)
-            label.grid(row=0, column=i, sticky="ew", padx=5, pady=5)
-            frame_header_tableau.grid_columnconfigure(i, weight=int(col_widths[i] * 10))
+        tree.place(relx=0.05, rely=0.2, relwidth=0.9, relheight=0.6)
         
         btn_insert_student = tk.Button(liste, text="Ajouter les étudiants", bg="orange", fg="white", font=font_sem, 
                                        command=self.fenetre_de_selection_de_fichier_xlsx)
