@@ -185,7 +185,6 @@ def get_etudiant(conn, matricule):
         
 
 def get_etudiant_by_promotion_per_semester(conn, promotion, semestre):
-    
     cursor = conn.cursor()
     etudiants = []
     
@@ -195,12 +194,22 @@ def get_etudiant_by_promotion_per_semester(conn, promotion, semestre):
         inscriptions = cursor.fetchall()
         
         for inscription in inscriptions:
-            etudiants.append(get_etudiant(conn, inscription[1]))
+            # Assuming get_etudiant returns a tuple with the student data
+            etudiant = get_etudiant(conn, inscription[1])  # Get student by ID
+            if etudiant:
+                # Append the student data in the correct format
+                etudiants.append((
+                    etudiant[0],  # Assuming the first value is student_id
+                    etudiant[1],  # First name
+                    etudiant[2],  # Last name
+                    etudiant[3],  # Gender
+                    etudiant[4],  # City
+                    etudiant[5]   # Date of birth (should be a datetime object)
+                ))
         
         return etudiants
     except Error as e:
-        print(f"Erreur lors de la recupération des etudiants de la promotion : {e}")
-        
+        print(f"Erreur lors de la récupération des étudiants de la promotion : {e}")
         return etudiants
     
     
