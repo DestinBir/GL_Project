@@ -65,6 +65,9 @@ class ListeEtudiant(tk.Frame):
         recherche = tk.Entry(liste, font=tkFont.Font(family="Arial", size=12))
         recherche.place(relx=0.7, rely=0.05, width=200)
         
+        btn_actualiser = tk.Button(liste, text="Actualiser", bg="orange", fg="white", font=font_sem, command=self.actualiser_liste)
+        btn_actualiser.place(relx=0.9, rely=0.05)
+        
         frame_header_tableau = tk.Frame(liste, bg="white")
         frame_header_tableau.place(relx=0, rely=0.1, relwidth=1)
         
@@ -78,22 +81,39 @@ class ListeEtudiant(tk.Frame):
         #     frame_header_tableau.grid_columnconfigure(i, weight=int(col_widths[i] * 10))
         
         columns = ("Matricule", "Nom", "Postnom", "Sexe", "Lieu de naissance", "Date de naissance")    
-        tree = ttk.Treeview(liste, columns=columns, show="headings")
+        self.tree = ttk.Treeview(liste, columns=columns, show="headings")
         
         for col in columns:
-            tree.heading(col, text=col)
-            tree.column(col, width=150)
+            self.tree.heading(col, text=col)
+            self.tree.column(col, width=150)
         
         data = get_etudiant_by_promotion_per_semester(connect_to_db(), 1, "Semestre 1")
         
         for row in data:
-            tree.insert("", "end", values=row)
+            self.tree.insert("", "end", values=row)
         
-        tree.place(relx=0.05, rely=0.2, relwidth=0.9, relheight=0.6)
+        self.tree.place(relx=0.05, rely=0.2, relwidth=0.9, relheight=0.6)
         
         btn_insert_student = tk.Button(liste, text="Ajouter les étudiants", bg="orange", fg="white", font=font_sem, 
                                        command=self.fenetre_de_selection_de_fichier_xlsx)
         btn_insert_student.place(relx=0.5, rely=0.85, anchor="center")
+        
+    def actualiser_liste(self):
+        """Actualise la liste des étudiants affichée dans le tableau"""
+        # Ensure that treeview is created before we try to access it
+        if hasattr(self, 'tree'):
+            # Clear existing data in the Treeview
+            for item in self.tree.get_children():
+                self.tree.delete(item)
+            
+            # Fetch the latest data
+            data = get_etudiant_by_promotion_per_semester(connect_to_db(), 1, "Semestre 1")
+            
+            # Insert the updated rows into the Treeview
+            for row in data:
+                self.tree.insert("", "end", values=row)
+        else:
+            print("Treeview not found!")
 
 """if __name__ == "__main__":
     root = tk.Tk()
