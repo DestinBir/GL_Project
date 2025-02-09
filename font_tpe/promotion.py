@@ -43,20 +43,20 @@ class Promotion(tk.Frame):
 
 	# Fonction pour ouvrir une nouvelle fenêtre
 	def open_new_window(self,bac_title):
-	    new_window = tk.Toplevel(self)
-	    new_window.title(bac_title)
-	    new_window.geometry("500x300")
-	    
-	    label = tk.Label(new_window, text=f"Bienvenue dans la section {bac_title} !", font=self.subtitle_font, fg="black")
-	    label.pack(expand=True)
-	    button=tk.Button(new_window, text="selectionner")
+		new_window = tk.Toplevel(self)
+		new_window.title(bac_title)
+		new_window.geometry("500x300")
+
+		label = tk.Label(new_window, text=f"Bienvenue dans la section {bac_title} !", font=self.subtitle_font, fg="black")
+		label.pack(expand=True)
+		button=tk.Button(new_window, text="selectionner")
 
 	# Fonction pour créer un bloc BAC sous forme de bouton
 	def create_bac_block(self,parent, title):
-	    button = tk.Button(parent, text=title + "\n\nDescription privilèges\nLorem ipsum dolor sit amet...",
-	                       font=self.subtitle_font, fg=self.text_color, bg=self.bg_color, wraplength=250,
-	                       width=25, height=10, relief="raised", bd=3,
-	                       command=lambda: self.master.transition(self.master.liste_etudiant))
-	    button.pack(side="left", expand=True, fill="both", padx=10, pady=20)
+		button = tk.Button(parent, text=title + "\n\nDescription privilèges\nLorem ipsum dolor sit amet...",
+		                   font=self.subtitle_font, fg=self.text_color, bg=self.bg_color, wraplength=250,
+		                   width=25, height=10, relief="raised", bd=3,
+		                   command=lambda: self.master.transition(self.master.liste_etudiant))
+		button.pack(side="left", expand=True, fill="both", padx=10, pady=20)
 
 	
