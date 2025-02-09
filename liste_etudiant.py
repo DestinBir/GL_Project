@@ -4,6 +4,10 @@ import tkinter.font as tkFont
 
 import datetime
 
+from functions import *
+
+
+
 class ListeEtudiant(tk.Frame):
     def __init__(self, master, text_promotion="BAC1", **kwargs):
         super().__init__(master, **kwargs)
@@ -18,7 +22,8 @@ class ListeEtudiant(tk.Frame):
             filetypes=(("Fichier Excel", "*.xlsx"), ("Tous les fichiers", "*.*"))
         )
         if chemin_fichier:
-            print(chemin_fichier)
+            inscrire_etudiant_depuis_excel(chemin_fichier, connect_to_db(), 1, "2024-2025", "Semestre 1")
+            print("Les étudiants ont été ajoutés avec succès.")
     
     def Contener(self):
         menu = tk.Frame(self, width=300, height=self.winfo_screenheight(), bg="#0A1F44")  # Bleu de nuit
@@ -79,13 +84,7 @@ class ListeEtudiant(tk.Frame):
             tree.heading(col, text=col)
             tree.column(col, width=150)
         
-        data = [
-            ('UK-Ljfdkle01', 'Bahati', 'Jeoge', 'M', 'Bukavu', datetime.date(2012, 12, 12)),
-            ('UK-Ljfdkle02', 'Bahati', 'Jeoge', 'M', 'Bukavu', datetime.date(2012, 12, 13)),
-            ('UK-Ljfdkle03', 'Bahati', 'Jeoge', 'M', 'Bukavu', datetime.date(2012, 12, 14)),
-            ('UK-Ljfdkle04', 'Bahati', 'Jeoge', 'M', 'Bukavu', datetime.date(2012, 12, 15)),
-            ('UK-Ljfdkle05', 'Bahati', 'Jeoge', 'M', 'Bukavu', datetime.date(2012, 12, 16))
-        ]
+        data = get_etudiant_by_promotion_per_semester(connect_to_db(), 1, "Semestre 1")
         
         for row in data:
             tree.insert("", "end", values=row)
