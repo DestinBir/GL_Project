@@ -20,7 +20,7 @@ class Application(tk.Tk):
 		self.promotion = Promotion(self)
 		self.liste_etudiant = ListeEtudiant(self)
 		self.curent_screen = None
-		self.transition(self.liste_etudiant)
+		self.transition(self.login)
 
 
 	def transition(self,screen):
