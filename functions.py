@@ -2,6 +2,8 @@ import mysql.connector
 from mysql.connector import Error
 from read_xlsx import *
 
+import datetime
+
 
 def verifier_etudiant_exist(cursor, matricule):
     sql = "SELECT * FROM Etudiant WHERE matricule = %s"
@@ -189,23 +191,26 @@ def get_etudiant_by_promotion_per_semester(conn, promotion, semestre):
     etudiants = []
     
     try:
-        sql = "SELECT * FROM Inscrire WHERE id_promo = %s AND Semestre = %s"
+        # SQL query to get student matricules based on promotion and semester
+        sql = """
+        SELECT E.matricule, E.NomsEtu, E.PrenomEtu, E.Sexe, E.LieuNais, E.DateNais
+        FROM Etudiant E
+        JOIN Inscrire I ON E.matricule = I.matricule
+        WHERE I.id_promo = %s AND I.Semestre = %s
+        """
         cursor.execute(sql, (promotion, semestre))
-        inscriptions = cursor.fetchall()
+        etudiant_data = cursor.fetchall()
         
-        for inscription in inscriptions:
-            # Assuming get_etudiant returns a tuple with the student data
-            etudiant = get_etudiant(conn, inscription[1])  # Get student by ID
-            if etudiant:
-                # Append the student data in the correct format
-                etudiants.append((
-                    etudiant[0],  # Assuming the first value is student_id
-                    etudiant[1],  # First name
-                    etudiant[2],  # Last name
-                    etudiant[3],  # Gender
-                    etudiant[4],  # City
-                    etudiant[5]   # Date of birth (should be a datetime object)
-                ))
+        # Process each student and append their data in the required format
+        for etudiant in etudiant_data:
+            etudiants.append((
+                etudiant[0],  # matricule
+                etudiant[1],  # NomEtu
+                etudiant[2],  # PrenomEtu
+                etudiant[3],  # Sexe
+                etudiant[4],  # LieuNais
+                etudiant[5]   # DateNais (should be a datetime object)
+            ))
         
         return etudiants
     except Error as e:
