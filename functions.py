@@ -294,6 +294,7 @@ def inscrire_etudiant_depuis_excel(path, conn, id_promo, annee_academique, semes
                 print(f"Inscription de l'étudiant {matricule} ajoutée avec succès.")
             except Error as e:
                 print(f"Erreur lors de l'inscription de l'étudiant {matricule} : {e}")
+                
         else:
             print(f"L'étudiant {matricule} est déjà inscrit à ce semestre.")
     
@@ -303,6 +304,8 @@ def inscrire_etudiant_depuis_excel(path, conn, id_promo, annee_academique, semes
     print('Inscription réussie à la base de données.')
     print('=======================================')
     conn.close()
+    
+    return True
 
 def authentification_appariteur():
     pass

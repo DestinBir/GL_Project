@@ -34,7 +34,7 @@ class Promotion(tk.Frame):
 		main_frame = tk.Frame(self, bg="white")
 		main_frame.pack(expand=True, fill="both")
 
-		tk.Button(text='Action', command=lambda: self.callback).pack()
+		# tk.Button(text='Action', command=lambda: self.callback).pack()
   
 		# Création des trois boutons BAC
 		# self.create_bac_block(main_frame, "BAC 1")
@@ -66,11 +66,11 @@ class Promotion(tk.Frame):
 		button.pack(side="left", expand=True, padx=10, pady=20)
 
 	
-	def callback():
-		if askyesno('Titre 1', 'Êtes-vous sûr de vouloir faire ça?'):
-			showwarning('Titre 2', 'Tant pis...')
-		else:
-			showinfo('Titre 3', 'Vous avez peur!')
-			showerror("Titre 4", "Aha")
+	# def callback():
+	# 	if askyesno('Titre 1', 'Êtes-vous sûr de vouloir faire ça?'):
+	# 		showwarning('Titre 2', 'Tant pis...')
+	# 	else:
+	# 		showinfo('Titre 3', 'Vous avez peur!')
+	# 		showerror("Titre 4", "Aha")
 
 	
