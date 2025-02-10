@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import font
+from tkinter.messagebox import *
 
 from functions import connect_to_db, get_promotions
 
@@ -33,6 +34,8 @@ class Promotion(tk.Frame):
 		main_frame = tk.Frame(self, bg="white")
 		main_frame.pack(expand=True, fill="both")
 
+		tk.Button(text='Action', command=lambda: self.callback).pack()
+  
 		# Création des trois boutons BAC
 		# self.create_bac_block(main_frame, "BAC 1")
 		# self.create_bac_block(main_frame, "BAC 2")
@@ -41,6 +44,8 @@ class Promotion(tk.Frame):
 		promotions = get_promotions(connect_to_db())
 		for prom in promotions:
 			self.create_bac_block(main_frame, prom[1])
+
+		
 
 	# Fonction pour ouvrir une nouvelle fenêtre
 	def open_new_window(self,bac_title):
@@ -59,5 +64,13 @@ class Promotion(tk.Frame):
 		                   width=25, height=18, relief="raised", bd=3,
 		                   command=lambda: self.master.transition(self.master.liste_etudiant))
 		button.pack(side="left", expand=True, padx=10, pady=20)
+
+	
+	def callback():
+		if askyesno('Titre 1', 'Êtes-vous sûr de vouloir faire ça?'):
+			showwarning('Titre 2', 'Tant pis...')
+		else:
+			showinfo('Titre 3', 'Vous avez peur!')
+			showerror("Titre 4", "Aha")
 
 	
