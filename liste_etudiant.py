@@ -26,7 +26,7 @@ class ListeEtudiant(tk.Frame):
             filetypes=(("Fichier Excel", "*.xlsx"), ("Tous les fichiers", "*.*"))
         )
         if chemin_fichier:
-            etat = inscrire_etudiant_depuis_excel(chemin_fichier, connect_to_db(), self.parent.selected_promotion_id, "2024-2025", "Semestre 1")
+            etat = inscrire_etudiant_depuis_excel(chemin_fichier, connect_to_db(), self.master.selected_promotion_id, "2024-2025", "Semestre 1")
             if etat: 
                 messagebox.showinfo("Success", "L'inscription des etudiants a étè fait")
         
@@ -95,7 +95,7 @@ class ListeEtudiant(tk.Frame):
             self.tree.heading(col, text=col)
             self.tree.column(col, width=150)
         
-        data = get_etudiant_by_promotion_per_semester(connect_to_db(), self.parent.selected_promotion_id, "Semestre 1")
+        data = get_etudiant_by_promotion_per_semester(connect_to_db(), self.master.selected_promotion_id, "Semestre 1")
         
         for row in data:
             self.tree.insert("", "end", values=row)
