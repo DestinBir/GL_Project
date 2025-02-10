@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import font
 
+from functions import connect_to_db, get_promotions
 
 class Promotion(tk.Frame):
 	def __init__(self, master, **kwargs):
@@ -36,6 +37,10 @@ class Promotion(tk.Frame):
 		# self.create_bac_block(main_frame, "BAC 1")
 		# self.create_bac_block(main_frame, "BAC 2")
 		# self.create_bac_block(main_frame, "BAC 3")
+  
+		promotions = get_promotions(connect_to_db())
+		for prom in promotions:
+			self.create_bac_block(main_frame, prom[1])
 
 	# Fonction pour ouvrir une nouvelle fenêtre
 	def open_new_window(self,bac_title):
