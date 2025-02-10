@@ -16,6 +16,7 @@ class ListeEtudiant(tk.Frame):
         super().__init__(master, **kwargs)
         self.master = master
         self.TEXT_PROMOTION = text_promotion
+        self.subtitle_font = tkFont.Font(family="Arial", size=14, weight="bold")
         self.configure(bg="#2C2C2C")  # Gris foncé
         self.Contener()
     
@@ -104,6 +105,9 @@ class ListeEtudiant(tk.Frame):
         btn_insert_student = tk.Button(liste, text="Ajouter les étudiants", bg="orange", fg="white", font=font_sem, 
                                        command=self.fenetre_de_selection_de_fichier_xlsx)
         btn_insert_student.place(relx=0.5, rely=0.85, anchor="center")
+        
+        return_button = tk.Button(self, text="Retour", font=self.subtitle_font, fg="white", bg="orange", command=self.master.previous_screen)
+        return_button.pack(pady=10)
         
     def actualiser_liste(self):
         """Actualise la liste des étudiants affichée dans le tableau"""

@@ -49,27 +49,22 @@ class Promotion(tk.Frame):
                 row_frame = tk.Frame(main_frame, bg="white")
                 row_frame.pack(fill="x", padx=20)
             
-            self.create_bac_block(row_frame, prom[1])
+            self.create_bac_block(row_frame, prom[1], prom[0])
         
         # Ajout du bouton de retour
-        return_button = tk.Button(self, text="Retour", font=self.subtitle_font, fg="white", bg="orange", command=self.confirm_return)
+        return_button = tk.Button(self, text="Retour", font=self.subtitle_font, fg="white", bg="orange", command=self.master.previous_screen)
         return_button.pack(pady=10)
 
     # Fonction pour gérer la sélection de promotion
-    def select_promotion(self, promotion_name):
+    def select_promotion(self, promotion_id, promotion_name):
         self.selected_promotion = promotion_name
-        print(f"Promotion sélectionnée : {self.selected_promotion}")
+        print(f"Promotion sélectionnée : {self.selected_promotion} (ID: {promotion_id})")
         self.master.transition(self.master.liste_etudiant)
 
     # Fonction pour créer un bloc BAC sous forme de bouton
-    def create_bac_block(self, parent, title):
+    def create_bac_block(self, parent, title, promotion_id):
         button = tk.Button(parent, text=title + "\n\nEn savoir plus\nListe des étudiants...",
                            font=self.subtitle_font, fg=self.text_color, bg=self.bg_color, wraplength=250,
                            width=18, height=8, relief="raised", bd=3,
-                           command=lambda: self.select_promotion(title))
+                           command=lambda: self.select_promotion(promotion_id, title))
         button.pack(side="left", expand=True, padx=10, pady=10)
-
-    # Fonction pour afficher une boîte de confirmation avant de retourner
-    def confirm_return(self):
-        if messagebox.askyesno("Confirmation", "Êtes-vous sûr de vouloir retourner ?"):
-            self.master.transition(self.master.previous_screen())
