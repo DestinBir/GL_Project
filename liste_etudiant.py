@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, filedialog
+from tkinter import ttk, filedialog, messagebox
 import tkinter.font as tkFont
 
 import datetime
@@ -9,6 +9,9 @@ from functions import *
 
 
 class ListeEtudiant(tk.Frame):
+    
+    
+    
     def __init__(self, master, text_promotion="BAC1", **kwargs):
         super().__init__(master, **kwargs)
         self.master = master
@@ -22,8 +25,12 @@ class ListeEtudiant(tk.Frame):
             filetypes=(("Fichier Excel", "*.xlsx"), ("Tous les fichiers", "*.*"))
         )
         if chemin_fichier:
-            inscrire_etudiant_depuis_excel(chemin_fichier, connect_to_db(), 1, "2024-2025", "Semestre 1")
-            print("Les étudiants ont été ajoutés avec succès.")
+            etat = inscrire_etudiant_depuis_excel(chemin_fichier, connect_to_db(), 1, "2024-2025", "Semestre 1")
+            if etat: 
+                messagebox.showinfo("Success", "L'inscription des etudiants a étè fait")
+        
+        else:
+            messagebox.showerror("Erreur", "L'inscription n'a pas étè fait.")
     
     def Contener(self):
         menu = tk.Frame(self, width=300, height=self.winfo_screenheight(), bg="#0A1F44")  # Bleu de nuit
