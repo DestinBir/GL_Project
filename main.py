@@ -19,7 +19,7 @@ class Application(tk.Tk):
         self.curent_screen = None
         self.screen_history = []  # Stack to track previous screens
         
-        self.transition(self.promotion)
+        self.transition(self.login)
 
     def transition(self, screen):
         if self.curent_screen:

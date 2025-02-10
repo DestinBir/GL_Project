@@ -107,7 +107,7 @@ class ListeEtudiant(tk.Frame):
         btn_insert_student.place(relx=0.5, rely=0.85, anchor="center")
         
         return_button = tk.Button(self, text="Retour", font=self.subtitle_font, fg="white", bg="orange", command=self.master.previous_screen)
-        return_button.pack(pady=10)
+        return_button.place(relx=0.5, rely=0.95, anchor="center")
         
     def actualiser_liste(self):
         """Actualise la liste des étudiants affichée dans le tableau"""
