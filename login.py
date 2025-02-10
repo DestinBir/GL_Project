@@ -13,7 +13,7 @@ class Login(tk.Frame):
     def Contener(self):
         # Récupération du chemin du Bureau
         CHEMIN_VERS_BUREAU = os.path.join(os.path.expanduser("~"), "Desktop")
-        logo_path = os.path.join(CHEMIN_VERS_BUREAU, "ucb logo.jpg")
+        logo_path = os.path.join(CHEMIN_VERS_BUREAU, "Logo-UCB.png")
 
         self.frame = tk.Frame(self, width=200, height=200)
         self.frame.place(relx=0.5, rely=0.5, anchor="center")
@@ -22,13 +22,14 @@ class Login(tk.Frame):
         try:
             logo = Image.open(logo_path)
             logo = logo.resize((120, 100))  # Redimensionner le logo
-            logo_tk = ImageTk.PhotoImage(logo)
-            logo_label = tk.Label(self.frame, image=logo_tk, bg="white")
+            self.logo_tk = ImageTk.PhotoImage(logo)  # Stocker l'image dans un attribut
+            logo_label = tk.Label(self.frame, image=self.logo_tk, bg="#FFFFFF")  # Blanc
             logo_label.pack(pady=10)
         except Exception as e:
             print(f"Erreur lors du chargement du logo : {e}")
-            logo_label = tk.Label(self.frame, text="[Logo introuvable]", fg="red", bg="white", font=("Arial", 10))
+            logo_label = tk.Label(self.frame, text="[Logo introuvable]", fg="red", bg="#FFFFFF", font=("Arial", 10))
             logo_label.pack(pady=10)
+        
 
         # Titre centré
         title_label = tk.Label(self.frame, text="GEST NOTES", fg="#f48024", bg="white", font=("Arial", 14, "bold"))
