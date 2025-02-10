@@ -5,15 +5,84 @@ from functions import *  # Import des fonctions de gestion des étudiants
 
 class ListeEtudiant(tk.Frame):
     def __init__(self, master, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(master, **kwargs)
         self.master = master
 
+        # Récupération des infos de promotion
         self.TEXT_PROMOTION = self.master.promotion_name
         self.ID_PROMOTION = self.master.promotion_id
-        self.subtitle_font = tkFont.Font(family="Arial", size=14, weight="bold")
-        self.configure(bg="#2C2C2C")
 
-        self.Contener()
+        # Styles et couleurs
+        self.bg_color = "#2C2C2C"
+        self.sidebar_color = "#0A1F44"
+        self.button_color = "#F28C28"
+        self.button_hover_color = "#F4A261"
+        self.text_color = "white"
+
+        # Polices
+        self.title_font = tkFont.Font(family="Arial", size=22, weight="bold")
+        self.subtitle_font = tkFont.Font(family="Arial", size=14, weight="bold")
+
+        self.configure(bg=self.bg_color)
+
+        # Création de l'UI
+        self.create_widgets()
+
+    def create_widgets(self):
+        """Crée les éléments de l'interface utilisateur"""
+
+        # ----- MENU LATÉRAL -----
+        menu = tk.Frame(self, width=120, bg=self.sidebar_color)
+        menu.pack(side="left", fill="y")
+
+        title = tk.Label(menu, text="Gest Notes", fg="white", bg=self.sidebar_color, font=("Arial", 22, "bold"))
+        title.pack(pady=20)
+
+        # Séparateur vertical
+        ligne_verticale = tk.Frame(self, bg="black", width=2)
+        ligne_verticale.pack(side="left", fill="y")
+
+        # ----- CONTENU PRINCIPAL -----
+        content = tk.Frame(self, bg="white")
+        content.pack(expand=True, fill="both", padx=10, pady=10)
+
+        # Label de la promotion
+        self.label_promotion = tk.Label(content, text=f"Promotion : {self.TEXT_PROMOTION}",
+                                        font=("Arial", 18, "bold"), bg="white", fg="#333")
+        self.label_promotion.pack(pady=10)
+
+        # Tableau des étudiants
+        columns = ("Matricule", "Nom", "Postnom", "Sexe", "Lieu de naissance", "Date de naissance")
+        self.tree = ttk.Treeview(content, columns=columns, show="headings", height=10)
+
+        # Configuration des colonnes
+        for col in columns:
+            self.tree.heading(col, text=col, anchor="center")
+            self.tree.column(col, width=150, anchor="center")
+
+        self.tree.pack(expand=True, fill="both", padx=10, pady=10)
+
+        # ----- BOUTONS -----
+        button_frame = tk.Frame(content, bg="white")
+        button_frame.pack(pady=10)
+
+        btn_insert_student = tk.Button(button_frame, text="Ajouter les étudiants", font=self.subtitle_font,
+                                       fg="white", bg=self.button_color, relief="flat", width=20, height=2,
+                                       cursor="hand2", command=self.fenetre_de_selection_de_fichier_xlsx)
+        btn_insert_student.pack(side="left", padx=10)
+
+        btn_insert_student.bind("<Enter>", lambda e: btn_insert_student.config(bg=self.button_hover_color))
+        btn_insert_student.bind("<Leave>", lambda e: btn_insert_student.config(bg=self.button_color))
+
+        btn_back = tk.Button(button_frame, text="Retour", font=self.subtitle_font,
+                             fg="white", bg=self.bg_color, relief="flat", width=15, height=2,
+                             cursor="hand2", command=self.master.previous_screen)
+        btn_back.pack(side="left", padx=10)
+
+        btn_back.bind("<Enter>", lambda e: btn_back.config(bg="#444"))
+        btn_back.bind("<Leave>", lambda e: btn_back.config(bg=self.bg_color))
+
+        self.update_promotion_info()
 
     def update_promotion_info(self):
         """Met à jour les informations de la promotion sélectionnée"""
@@ -23,52 +92,21 @@ class ListeEtudiant(tk.Frame):
         self.actualiser_liste()
 
     def fenetre_de_selection_de_fichier_xlsx(self):
+        """Ouvre une boîte de dialogue pour sélectionner un fichier Excel et inscrire les étudiants"""
         chemin_fichier = filedialog.askopenfilename(
             title="Sélectionner fiche étudiant",
             filetypes=(("Fichier Excel", "*.xlsx"), ("Tous les fichiers", "*.*"))
         )
         if chemin_fichier:
-            etat = inscrire_etudiant_depuis_excel(chemin_fichier, connect_to_db(), self.ID_PROMOTION, "2024-2025", "Semestre 1")
-            if etat: 
+            etat = inscrire_etudiant_depuis_excel(chemin_fichier, connect_to_db(),
+                                                  self.ID_PROMOTION, "2024-2025", "Semestre 1")
+            if etat:
                 messagebox.showinfo("Succès", "L'inscription des étudiants a été effectuée.")
                 self.actualiser_liste()
             else:
                 messagebox.showerror("Erreur", "Échec de l'inscription des étudiants.")
         else:
             messagebox.showwarning("Annulé", "Aucun fichier sélectionné.")
-
-    def Contener(self):
-        menu = tk.Frame(self, width=100, bg="#0A1F44")
-        menu.place(x=0, y=0)
-
-        title = tk.Label(menu, text="Gest Notes", fg="white", bg="#0A1F44", font=("Arial", 25, "bold"))
-        title.place(relx=0.5, rely=0.05, anchor="center")
-
-        ligne_verticale = tk.Frame(self, bg="black", width=2)
-        ligne_verticale.place(x=100, y=0, relheight=1)
-
-        liste = tk.Frame(self, bg="white")
-        liste.place(x=101, y=0, relwidth=0.9, relheight=1)
-
-        self.label_promotion = tk.Label(liste, text=f"Promotion : {self.TEXT_PROMOTION}", font=("Arial", 18, "bold"), bg="white")
-        self.label_promotion.pack(pady=10)
-
-        columns = ("Matricule", "Nom", "Postnom", "Sexe", "Lieu de naissance", "Date de naissance")
-        self.tree = ttk.Treeview(liste, columns=columns, show="headings")
-        for col in self.tree["columns"]:
-            self.tree.heading(col, text=col)
-            self.tree.column(col, width=150)
-        self.tree.pack(expand=True, fill="both", padx=10, pady=10)
-
-        btn_insert_student = tk.Button(liste, text="Ajouter les étudiants", bg="orange", fg="white", font=self.subtitle_font, 
-                                       command=self.fenetre_de_selection_de_fichier_xlsx)
-        btn_insert_student.pack(pady=10)
-
-        btn_back = tk.Button(self, text="Retour", font=self.subtitle_font, fg="white", bg="#2C2C2C", 
-                             command=self.master.previous_screen)
-        btn_back.pack(pady=10)
-
-        self.update_promotion_info()
 
     def actualiser_liste(self):
         """Actualise la liste des étudiants affichée"""
@@ -81,12 +119,4 @@ class ListeEtudiant(tk.Frame):
             for row in data:
                 self.tree.insert("", "end", values=row)
         else:
-            self.tree.insert("", "end", values=("Aucun étudiant", "", "", ""))
-
-
-
-
-
-
-
-
+            self.tree.insert("", "end", values=("Aucun étudiant", "", "", "", "", ""))
