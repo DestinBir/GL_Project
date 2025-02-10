@@ -18,10 +18,6 @@ class Promotion(tk.Frame):
 		self.Contener()
 
 	def Contener(self):
-
-		
-		
-
 		# Création du titre principal
 		title_frame = tk.Frame(self, bg="white")
 		title_frame.pack(fill="x", pady=10)
@@ -29,7 +25,7 @@ class Promotion(tk.Frame):
 		title_label = tk.Label(title_frame, text="PROMOTION", font=self.title_font, fg="black", bg="white")
 		title_label.pack()
 
-		subtitle_label = tk.Label(title_frame, text="choisir une promotion pour continuer", font=self.subtitle_font, fg=self.highlight_color, bg="white")
+		subtitle_label = tk.Label(title_frame, text="Choisir une promotion pour continuer", font=self.subtitle_font, fg=self.highlight_color, bg="white")
 		subtitle_label.pack()
 
 		# Conteneur principal
@@ -37,9 +33,9 @@ class Promotion(tk.Frame):
 		main_frame.pack(expand=True, fill="both")
 
 		# Création des trois boutons BAC
-		self.create_bac_block(main_frame, "BAC 1")
-		self.create_bac_block(main_frame, "BAC 2")
-		self.create_bac_block(main_frame, "BAC 3")
+		# self.create_bac_block(main_frame, "BAC 1")
+		# self.create_bac_block(main_frame, "BAC 2")
+		# self.create_bac_block(main_frame, "BAC 3")
 
 	# Fonction pour ouvrir une nouvelle fenêtre
 	def open_new_window(self,bac_title):
@@ -53,10 +49,10 @@ class Promotion(tk.Frame):
 
 	# Fonction pour créer un bloc BAC sous forme de bouton
 	def create_bac_block(self,parent, title):
-		button = tk.Button(parent, text=title + "\n\nDescription privilèges\nLorem ipsum dolor sit amet...",
+		button = tk.Button(parent, text=title + "\n\nEn savoir plus\nListe des étudiants...",
 		                   font=self.subtitle_font, fg=self.text_color, bg=self.bg_color, wraplength=250,
-		                   width=25, height=10, relief="raised", bd=3,
+		                   width=25, height=18, relief="raised", bd=3,
 		                   command=lambda: self.master.transition(self.master.liste_etudiant))
-		button.pack(side="left", expand=True, fill="both", padx=10, pady=20)
+		button.pack(side="left", expand=True, padx=10, pady=20)
 
 	
