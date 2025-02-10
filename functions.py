@@ -306,3 +306,13 @@ def inscrire_etudiant_depuis_excel(path, conn, id_promo, annee_academique, semes
 
 def authentification_appariteur():
     pass
+
+def get_promotions(conn):
+    cursor = conn.cursor()
+    
+    try:
+        sql = "SELECT * FROM Promotion "
+        cursor.execute(sql)
+        return cursor.fetchall()
+    except Error as e:
+        print(f"Erreur lors de la recupération des etudiants de la promotion : {e}")

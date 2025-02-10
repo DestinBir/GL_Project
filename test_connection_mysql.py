@@ -24,4 +24,5 @@ with mysql.connector.connect(
     # insert_promotion('BAC 3 Systèmes Informatiques', connection)
     # inscrire_etudiant_depuis_excel("format.xlsx", connection, 1, "2024-2025", "Semestre 1")
     # insert_etudiant_list_of_tuples(connection.cursor(), get_data_from_excel("format.xlsx"))
+    print(get_promotions(connection))
     print('=======================================')
