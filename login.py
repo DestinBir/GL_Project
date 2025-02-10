@@ -29,7 +29,7 @@ class Login(tk.Frame):
             print(f"Erreur lors du chargement du logo : {e}")
             logo_label = tk.Label(self.frame, text="[Logo introuvable]", fg="red", bg="#FFFFFF", font=("Arial", 10))
             logo_label.pack(pady=10)
-        
+
 
         # Titre centré
         title_label = tk.Label(self.frame, text="GEST NOTES", fg="#f48024", bg="white", font=("Arial", 14, "bold"))
@@ -62,4 +62,6 @@ class Login(tk.Frame):
         # Bouton Soumettre
         submit_button = tk.Button(frame1, text="Soumettre", bg="#f48024", fg="white", font=("Arial", 10, "bold"), width=15, command=lambda : self.master.transition(self.master.promotion))
         submit_button.pack(pady=10)
-        
+    
+    def Connexion(self):
+        pass

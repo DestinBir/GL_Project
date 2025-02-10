@@ -304,3 +304,5 @@ def inscrire_etudiant_depuis_excel(path, conn, id_promo, annee_academique, semes
     print('=======================================')
     conn.close()
 
+def authentification_appariteur():
+    pass
