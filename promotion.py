@@ -6,7 +6,8 @@ class Promotion(tk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(**kwargs)
         self.master = master
-        self.selected_promotion = None  # Variable pour stocker la promotion sélectionnée
+        self.selected_promotion = None # Variable pour stocker la promotion sélectionnée
+        self.selected_promotion_id = None
         
         # Définition des couleurs et polices
         self.bg_color = "#0A2A43"  # Bleu foncé des blocs
@@ -58,7 +59,8 @@ class Promotion(tk.Frame):
     # Fonction pour gérer la sélection de promotion
     def select_promotion(self, promotion_id, promotion_name):
         self.selected_promotion = promotion_name
-        print(f"Promotion sélectionnée : {self.selected_promotion} (ID: {promotion_id})")
+        self.selected_promotion_id = promotion_id
+        print(f"Promotion sélectionnée : {self.selected_promotion} ID: {self.selected_promotion_id}")
         self.master.transition(self.master.liste_etudiant)
 
     # Fonction pour créer un bloc BAC sous forme de bouton

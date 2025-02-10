@@ -26,7 +26,7 @@ class ListeEtudiant(tk.Frame):
             filetypes=(("Fichier Excel", "*.xlsx"), ("Tous les fichiers", "*.*"))
         )
         if chemin_fichier:
-            etat = inscrire_etudiant_depuis_excel(chemin_fichier, connect_to_db(), 1, "2024-2025", "Semestre 1")
+            etat = inscrire_etudiant_depuis_excel(chemin_fichier, connect_to_db(), self.parent.selected_promotion_id, "2024-2025", "Semestre 1")
             if etat: 
                 messagebox.showinfo("Success", "L'inscription des etudiants a étè fait")
         
@@ -95,7 +95,7 @@ class ListeEtudiant(tk.Frame):
             self.tree.heading(col, text=col)
             self.tree.column(col, width=150)
         
-        data = get_etudiant_by_promotion_per_semester(connect_to_db(), 1, "Semestre 1")
+        data = get_etudiant_by_promotion_per_semester(connect_to_db(), self.parent.selected_promotion_id, "Semestre 1")
         
         for row in data:
             self.tree.insert("", "end", values=row)
@@ -103,11 +103,13 @@ class ListeEtudiant(tk.Frame):
         self.tree.place(relx=0.05, rely=0.2, relwidth=0.9, relheight=0.6)
         
         btn_insert_student = tk.Button(liste, text="Ajouter les étudiants", bg="orange", fg="white", font=font_sem, 
-                                       command=self.fenetre_de_selection_de_fichier_xlsx)
-        btn_insert_student.place(relx=0.5, rely=0.85, anchor="center")
+                               command=self.fenetre_de_selection_de_fichier_xlsx)
+        btn_insert_student.place(relx=0.5, rely=0.88, anchor="center")  # Adjusted position for better spacing
         
-        return_button = tk.Button(self, text="Retour", font=self.subtitle_font, fg="white", bg="orange", command=self.master.previous_screen)
-        return_button.place(relx=0.5, rely=0.95, anchor="center")
+        return_button = tk.Button(self, text="Retour", font=self.subtitle_font, fg="white", bg="#2C2C2C", 
+                                  command=self.master.previous_screen)
+        return_button.place(relx=0.5, rely=0.91, anchor="center")  # Positioned below with 0.10 offset
+
         
     def actualiser_liste(self):
         """Actualise la liste des étudiants affichée dans le tableau"""
