@@ -58,9 +58,9 @@ class Promotion(tk.Frame):
 
     # Fonction pour gérer la sélection de promotion
     def select_promotion(self, promotion_id, promotion_name):
-        self.selected_promotion = promotion_name
-        self.selected_promotion_id = promotion_id
-        print(f"Promotion sélectionnée : {self.selected_promotion} ID: {self.selected_promotion_id}")
+        self.master.promotion_name = promotion_name
+        self.master.promotion_id = promotion_id
+        print(f"Promotion sélectionnée : {self.master.promotion_name} ID: {self.master.promotion_id}")
         self.master.transition(self.master.liste_etudiant)
 
     # Fonction pour créer un bloc BAC sous forme de bouton
