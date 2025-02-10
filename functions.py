@@ -4,6 +4,7 @@ from read_xlsx import *
 
 import datetime
 
+from tkinter import messagebox
 
 def verifier_etudiant_exist(cursor, matricule):
     sql = "SELECT * FROM Etudiant WHERE matricule = %s"
@@ -155,6 +156,7 @@ def connect_to_db():
             return conn
     except Error as e:
         print(f"Erreur de connexion à la base de données : {e}")
+        messagebox.showerror("Erreur de connexion", "La connexion à la base de données est impossible !")
         return None
 
 
